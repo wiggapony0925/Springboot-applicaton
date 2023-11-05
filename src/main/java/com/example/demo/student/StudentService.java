@@ -22,6 +22,8 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+
+    //adding student logic
     public void addNewStudent(Student student) {
         Optional<Student> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
         if (studentByEmail.isPresent()) {
@@ -29,6 +31,17 @@ public class StudentService {
         }
         studentRepository.save(student);
         System.out.println(student);
+
+    }
+
+    //deleting student logic
+    public void deleleteStudent(Long studentId) {
+        boolean studentExist = studentRepository.existsById(studentId);
+        if (!studentExist) {
+            throw new IllegalStateException("The student with this id" + studentId + " does not exist");
+        }
+        studentRepository.deleteById(studentId);
+
 
     }
 }

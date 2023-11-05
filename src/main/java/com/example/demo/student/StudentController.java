@@ -34,5 +34,10 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body(successMessage);
 
     }
+    //left of on creating delete method of the controller and business logic in service
+    @DeleteMapping(path = "{studentId}")
+    public void deleteStudent(@PathVariable("studentId") Long StudentId) {
+        studentService.deleleteStudent(StudentId);
 
+    }
 }
