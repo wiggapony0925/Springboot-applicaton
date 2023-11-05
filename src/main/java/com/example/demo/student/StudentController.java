@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/v1/student")
+@CrossOrigin(origins = "http://localhost:3001") // Specify the allowed origin (your React app's origin)
 public class StudentController {
 
     private final StudentService studentService;
