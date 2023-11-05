@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/v1/student")
@@ -40,4 +41,15 @@ public class StudentController {
         studentService.deleleteStudent(StudentId);
 
     }
+
+    // Put or Edit
+    @PutMapping(path = "{studentId}")
+    public void editStudent(
+            @PathVariable("studentId") Long studentId,
+            @RequestBody Map<String, String> requestBody) {
+        String name = requestBody.get("name");
+        String email = requestBody.get("email");
+        studentService.editStudent(studentId, name, email);
+    }
+
 }
