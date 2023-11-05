@@ -8,15 +8,17 @@ public class Student {
     private String email;
     private int age;
     private LocalDate dob;
-    private String gender;
-    enum gender{
+    private Gender gender;
+
+    public enum Gender {
         MALE, FEMALE, OTHER
     }
+
     public Student() {
     }
 
-    //constructure with id
-    public Student(Long id, String name, String email, int age, LocalDate dob, String gender) {
+    // Constructor with id
+    public Student(Long id, String name, String email, int age, LocalDate dob, Gender gender) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -25,8 +27,8 @@ public class Student {
         this.gender = gender;
     }
 
-    // constructure without id
-    public Student(String name, String email, int age, LocalDate dob, String gender) {
+    // Constructor without id
+    public Student(String name, String email, int age, LocalDate dob, Gender gender) {
         this.name = name;
         this.email = email;
         this.age = age;
@@ -74,11 +76,11 @@ public class Student {
         this.dob = dob;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
