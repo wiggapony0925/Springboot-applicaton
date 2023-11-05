@@ -20,14 +20,12 @@ public class StudentConfig {
            Student jeffrey = new Student(1L,
                    "Jeffrey Fernandez",
                    "ninjeff06@gmail.com",
-                   17,
                    LocalDate.of(2000, SEPTEMBER, 25),
                    Student.Gender.MALE);
            
            Student ryan = new Student(3L,
                    "Ryan dope",
                    "ryan@gmail.com",
-                   12,
                    LocalDate.of(2010, SEPTEMBER, 24),
                    Student.Gender.MALE);
 

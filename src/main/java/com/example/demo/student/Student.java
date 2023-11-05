@@ -1,8 +1,9 @@
 package com.example.demo.student;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
+import java.time.Period;
+
 @Entity
 @Table
 public class Student {
@@ -19,7 +20,8 @@ public class Student {
     private Long id;
     private String name;
     private String email;
-    private int age;
+    @Transient // no need to be a colum in our db age will bill calculated from db
+    private Integer date;
     private LocalDate dob;
     private Gender gender;
 
@@ -31,20 +33,18 @@ public class Student {
     }
 
     // Constructor with id
-    public Student(Long id, String name, String email, int age, LocalDate dob, Gender gender) {
+    public Student(Long id, String name, String email, LocalDate dob, Gender gender) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.age = age;
         this.dob = dob;
         this.gender = gender;
     }
 
     // Constructor without id
-    public Student(String name, String email, int age, LocalDate dob, Gender gender) {
+    public Student(String name, String email, LocalDate dob, Gender gender) {
         this.name = name;
         this.email = email;
-        this.age = age;
         this.dob = dob;
         this.gender = gender;
     }
@@ -74,11 +74,7 @@ public class Student {
     }
 
     public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
     public LocalDate getDob() {
@@ -103,7 +99,6 @@ public class Student {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", age=" + age +
                 ", dob=" + dob +
                 ", gender='" + gender + '\'' +
                 '}';
