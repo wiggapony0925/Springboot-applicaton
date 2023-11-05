@@ -10,7 +10,7 @@ import java.util.List;
 
 import static java.time.Month.*;
 
-// static removes the Month.SEPTEMBER into just SEPTEMBER
+// static removes the Month.SEPTEMBER into just SEPTEMBER s
 
 @Configuration
 public class StudentConfig {
