@@ -10,11 +10,7 @@ import java.util.List;
 @Table(name = "students")
 public class Student {
     @Id
-    @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize = 1
-    )
+    @SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
     private Long id;
     private String name;
@@ -22,12 +18,7 @@ public class Student {
     private LocalDate dob;
     private Gender gender;
 
-    @ManyToMany
-    @JoinTable(
-            name = "student_classroom",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "classroom_id")
-    )
+    @ManyToMany(mappedBy = "students", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Classroom> classrooms;
 
     public enum Gender {
@@ -37,7 +28,6 @@ public class Student {
     public Student() {
     }
 
-    // Constructor with id
     public Student(Long id, String name, String email, LocalDate dob, Gender gender) {
         this.id = id;
         this.name = name;
@@ -46,7 +36,6 @@ public class Student {
         this.gender = gender;
     }
 
-    // Constructor without id
     public Student(String name, String email, LocalDate dob, Gender gender) {
         this.name = name;
         this.email = email;
@@ -82,10 +71,6 @@ public class Student {
         return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
-    public int GetNumberOfClassroom() {
-        return 4;           // make it so it calcualtes total of classrooms based on connections
-    }
-
     public LocalDate getDob() {
         return dob;
     }
@@ -96,20 +81,5 @@ public class Student {
 
     public Gender getGender() {
         return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", dob=" + dob +
-                ", gender='" + gender + '\'' +
-                '}';
     }
 }

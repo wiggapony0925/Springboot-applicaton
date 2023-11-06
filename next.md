@@ -2,6 +2,8 @@
 
 MAKE a parent table that students belong to a classroom
 
+See why the students wont go into the list of classrooms 
+
 TEST controller endpoint
 
 

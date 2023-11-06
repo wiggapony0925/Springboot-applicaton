@@ -1,7 +1,6 @@
 package com.example.demo.classroom;
 
 import com.example.demo.student.Student;
-
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,11 +8,9 @@ import java.util.List;
 @Entity
 @Table(name = "classroom")
 public class Classroom {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String className;
     private String professor;
     private double Credits;
@@ -27,11 +24,9 @@ public class Classroom {
 
     private String subject;
 
-    // Default constructor with no arguments
     public Classroom() {
     }
 
-    // Constructor with arguments
     public Classroom(Long id, String className, String professor, double credits, Long roomNumber, List<Student> students, String subject) {
         this.id = id;
         this.className = className;
@@ -42,7 +37,6 @@ public class Classroom {
         this.subject = subject;
     }
 
-    // Constructor without ID
     public Classroom(String className, String professor, double credits, Long roomNumber, List<Student> students, String subject) {
         this.className = className;
         this.professor = professor;
@@ -51,8 +45,6 @@ public class Classroom {
         this.students = students;
         this.subject = subject;
     }
-
-    // Getters and setters
 
     public Long getId() {
         return id;
@@ -105,16 +97,4 @@ public class Classroom {
     public String getSubject() {
         return subject;
     }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    // Other fields and methods
-    public static long getTotalNumberOfClassrooms(EntityManager entityManager) {
-        TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(c) FROM Classroom c", Long.class);
-        return query.getSingleResult();
-    }
 }
-
-
