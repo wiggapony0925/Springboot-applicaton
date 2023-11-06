@@ -47,7 +47,6 @@ public class ClassroomConfig {
             repository.saveAll(List.of(mathClass, historyClass, scienceClass));
         };
     }
-
     private double getRandomCredits() {
         return new Random().nextDouble() * 4.0;
     }

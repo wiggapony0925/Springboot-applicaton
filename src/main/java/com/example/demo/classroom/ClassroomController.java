@@ -2,10 +2,8 @@ package com.example.demo.classroom;
 
 import com.example.demo.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +23,29 @@ public class ClassroomController {
     public List<Classroom> getClassrooms() {
         return classroomService.getClassrooms(); // Use classroomService instead of studentService
     }
+
+
+    //CREATE A CLASS
+
+    @PostMapping("/addStudentToClassroom")
+    public ResponseEntity<String> addStudentToClassroom(@RequestParam Long studentId, @RequestParam Long classroomId) {
+        if (classroomService.addStudentToClassroom(studentId, classroomId)) {
+            return ResponseEntity.ok("Student added to classroom successfully.");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to add student to classroom. Student or classroom not found.");
+        }
+    }
+
+    // REMOVE A Student
+
+    // DELETE A CLASS
+    @DeleteMapping(path = "{classId}")
+    public void deleteClassroom(@PathVariable("classId") Long ClassId) {
+        classroomService.deleteClassroom(ClassId);
+    }
+
+
+    // EDIT CLASS
 }
 
 
