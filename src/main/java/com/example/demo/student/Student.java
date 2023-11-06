@@ -1,11 +1,13 @@
 package com.example.demo.student;
 
+import com.example.demo.classroom.Classroom;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 @Entity
-@Table
+@Table(name = "students")
 public class Student {
     @Id
     @SequenceGenerator(
@@ -13,17 +15,20 @@ public class Student {
             sequenceName = "student_sequence",
             allocationSize = 1
     )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
     private Long id;
     private String name;
     private String email;
-    @Transient // no need to be a colum in our db age will bill calculated from db
-    private Integer date;
     private LocalDate dob;
     private Gender gender;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_classroom",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "classroom_id")
+    )
+    private List<Classroom> classrooms;
 
     public enum Gender {
         MALE, FEMALE, OTHER
@@ -75,6 +80,10 @@ public class Student {
 
     public int getAge() {
         return Period.between(this.dob, LocalDate.now()).getYears();
+    }
+
+    public int GetNumberOfClassroom() {
+        return 4;           // make it so it calcualtes total of classrooms based on connections
     }
 
     public LocalDate getDob() {
