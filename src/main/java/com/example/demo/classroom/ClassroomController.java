@@ -39,14 +39,13 @@ public class ClassroomController {
     }
     //add student to class
     @PostMapping("/{classroomId}/{studentId}")
-    public ResponseEntity<String> addStudentToClassroom(@RequestParam Long studentId, @RequestParam Long classId) {
-        if (classroomService.addStudentToClassroom(studentId, classId)) {
+    public ResponseEntity<String> addStudentToClassroom(@PathVariable Long classroomId, @PathVariable Long studentId) {
+        if (classroomService.addStudentToClassroom(studentId, classroomId)) {
             return ResponseEntity.ok("Student added to classroom successfully.");
         } else {
             return ResponseEntity.badRequest().body("Failed to add student to classroom. Student or classroom not found.");
         }
     }
-
     // REMOVE A Student
 
     // DELETE A CLASS
