@@ -2,6 +2,7 @@ package com.example.demo.classroom;
 
 import com.example.demo.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +20,27 @@ public class ClassroomController {
         this.classroomService = classroomService;
     }
 
+
+
+    // GET
     @GetMapping
     public List<Classroom> getClassrooms() {
         return classroomService.getClassrooms(); // Use classroomService instead of studentService
     }
 
-
     //CREATE A CLASS
+    @PostMapping
+    public ResponseEntity<String> createNewClassroom(@RequestBody Classroom classroom) {
+        classroomService.createClassroom(classroom);
 
-    @PostMapping("/addStudentToClassroom")
-    public ResponseEntity<String> addStudentToClassroom(@RequestParam Long studentId, @RequestParam Long classroomId) {
-        if (classroomService.addStudentToClassroom(studentId, classroomId)) {
+        String successMessage = "Created successfully: " + classroom.getClassName();
+        return ResponseEntity.status(HttpStatus.OK).body(successMessage);
+
+    }
+    //add student to class
+    @PostMapping("/{classroomId}/{studentId}")
+    public ResponseEntity<String> addStudentToClassroom(@RequestParam Long studentId, @RequestParam Long classId) {
+        if (classroomService.addStudentToClassroom(studentId, classId)) {
             return ResponseEntity.ok("Student added to classroom successfully.");
         } else {
             return ResponseEntity.badRequest().body("Failed to add student to classroom. Student or classroom not found.");

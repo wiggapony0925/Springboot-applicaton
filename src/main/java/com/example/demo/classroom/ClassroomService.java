@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,19 @@ public class ClassroomService {
         this.studentRepository = studentRepository;
     }
 
+    public void createClassroom(Classroom classroom) {
+        List<Classroom> classroomBySubject = classroomRepository.findBySubject(classroom.getSubject());
+
+        if (!classroomBySubject.isEmpty()) {
+            throw new IllegalStateException("A classroom with the same subject already exists.");
+        }
+        classroomRepository.save(classroom);
+    }
+
     public List<Classroom> getClassrooms() {
         return classroomRepository.findAll();
     }
+
 
     public boolean addStudentToClassroom(Long studentId, Long classroomId) {
         Classroom classroom = classroomRepository.findById(classroomId)
@@ -47,7 +58,7 @@ public class ClassroomService {
         return true;
     }
 
-    // bool true or fals
+
 
     public void deleteClassroom(Long classId) {
         boolean classExist = classroomRepository.existsById(classId);
