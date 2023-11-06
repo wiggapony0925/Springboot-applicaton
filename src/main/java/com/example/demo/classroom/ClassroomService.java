@@ -84,5 +84,48 @@ public class ClassroomService {
         }
         classroomRepository.deleteById(classId);
     }
+
+    public void editClassroom(Long classroomId, String className, String professor,  Long roomNumber, String subject ) {
+        // logic for editing classrooms check if the classroom exist in the db
+        Classroom classroom = classroomRepository.findById(classroomId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "The student with ID " + classroomId + " does not exist"));
+        if (className != null) {
+            if (className.length() > 2 && !className.equals(classroom.getClassName())) {
+                classroom.setClassName(className);
+            } else {
+                throw new IllegalStateException("Invalid name provided.");
+            }
+        }
+
+        if (professor != null) {
+            if (professor.length() > 2 && !professor.equals(classroom.getProfessor())) {
+                classroom.setProfessor(professor);
+            } else {
+                throw new IllegalStateException("Invalid name provided. ");
+            }
+        }
+
+        if (roomNumber != null) {
+            if (roomNumber.describeConstable().isPresent() && roomNumber.equals(classroom.getRoomNumber())) {
+                classroom.setRoomNumber(roomNumber);
+            } else {
+                throw new IllegalStateException("Invalid Room Number provided");
+            }
+        }
+
+        if (subject != null) {
+            if (subject.length() > 2 && !subject.equals(classroom.getSubject())) {
+                classroom.setSubject(subject);
+            } else {
+                throw new IllegalStateException("Invalid Subject for " + className);
+            }
+
+        }
+
+        classroomRepository.save(classroom);
+
+
+    }
 }
 

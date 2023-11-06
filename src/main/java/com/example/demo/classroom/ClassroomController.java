@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/v1/classroom")
@@ -63,8 +64,20 @@ public class ClassroomController {
         classroomService.deleteClassroom(ClassId);
     }
 
-
     // EDIT CLASS
+
+    @PutMapping(path = "{classId}")
+    public void editClassroom(@PathVariable("classId") Long classId,
+                              @RequestBody Map<String, String> requestBody) {
+        // varibles from request body to edit and then
+        String className = requestBody.get("className");
+        String professor = requestBody.get("professor");
+        Long roomNumber = Long.valueOf(requestBody.get("roomNumber"));
+        String subject = requestBody.get("subject");
+        classroomService.editClassroom(classId, className, professor, roomNumber, subject);
+
+
+    }
 
     // GET ALL STUDENTS FROM CLASS
 

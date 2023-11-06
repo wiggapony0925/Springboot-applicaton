@@ -45,8 +45,7 @@ public class StudentController {
 
     // Put or Edit
     @PutMapping(path = "{studentId}")
-    public void editStudent(
-            @PathVariable("studentId") Long studentId,
+    public void editStudent(@PathVariable("studentId") Long studentId,
             @RequestBody Map<String, String> requestBody) {
         String name = requestBody.get("name");
         String email = requestBody.get("email");
