@@ -47,6 +47,15 @@ public class ClassroomController {
         }
     }
     // REMOVE A Student
+    @DeleteMapping ("/{classroomId}/{studentId}")
+    public ResponseEntity<String> deleteStudentToClassroom(@PathVariable Long classroomId, @PathVariable Long studentId) {
+        if (classroomService.removeStudentFromClassroom(studentId, classroomId)) {
+            return ResponseEntity.ok("Student removed to classroom successfully.");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to remove student to classroom. Student or classroom not found.");
+        }
+    }
+
 
     // DELETE A CLASS
     @DeleteMapping(path = "{classId}")
@@ -56,6 +65,11 @@ public class ClassroomController {
 
 
     // EDIT CLASS
+
+    // GET ALL STUDENTS FROM CLASS
+
+
+
 }
 
 
