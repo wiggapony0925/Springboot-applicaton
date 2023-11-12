@@ -9,10 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
-import org.springframework.stereotype.Service;
-
 @Service
 public class ClassroomService {
 
@@ -36,6 +32,11 @@ public class ClassroomService {
 
     public List<Classroom> getClassrooms() {
         return classroomRepository.findAll();
+    }
+
+
+    public Optional<Classroom> getClassroomById(Long classId) {
+        return classroomRepository.findById(classId);
     }
 
 
@@ -85,7 +86,7 @@ public class ClassroomService {
         classroomRepository.deleteById(classId);
     }
 
-    public void editClassroom(Long classroomId, String className, String professor,  Long roomNumber, String subject ) {
+    public void editClassroom(Long classroomId, String className, String professor, Long roomNumber, String subject) {
         // logic for editing classrooms check if the classroom exist in the db
         Classroom classroom = classroomRepository.findById(classroomId)
                 .orElseThrow(() -> new IllegalStateException(
@@ -127,5 +128,7 @@ public class ClassroomService {
 
 
     }
+
 }
+
 

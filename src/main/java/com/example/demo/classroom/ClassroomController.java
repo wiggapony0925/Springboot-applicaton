@@ -1,6 +1,5 @@
 package com.example.demo.classroom;
 
-import com.example.demo.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/classroom")
@@ -28,6 +28,12 @@ public class ClassroomController {
     public List<Classroom> getClassrooms() {
         return classroomService.getClassrooms(); // Use classroomService instead of studentService
     }
+
+    @GetMapping("/{classId}")
+    public Optional<Classroom> getClassroomById(@PathVariable Long classId) {
+        return classroomService.getClassroomById(classId);
+    }
+
 
     //CREATE A CLASS
     @PostMapping
