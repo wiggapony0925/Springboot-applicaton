@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.utils.QRCodeGenerator;
+import com.google.zxing.WriterException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,12 +18,13 @@ import java.util.Optional;
 public class ClassroomController {
 
     private final ClassroomService classroomService;
+    private final QRCodeGenerator qrCodeGenerator;
 
     @Autowired
-    public ClassroomController(ClassroomService classroomService) {
+    public ClassroomController(ClassroomService classroomService, QRCodeGenerator qrCodeGenerator) {
         this.classroomService = classroomService;
+        this.qrCodeGenerator = qrCodeGenerator;
     }
-
 
 
     // GET
@@ -85,10 +89,25 @@ public class ClassroomController {
 
     }
 
-    // GET ALL STUDENTS FROM CLASS
+    // Generate Classroom QrCode
 
+    @GetMapping("/generateQRCode/{classId}")
+public ResponseEntity<String> generateQRCode(@PathVariable Long classId) {
+    Optional<Classroom> classroomOptional = classroomService.getClassroomById(classId);
 
+    if (classroomOptional.isPresent()) {
+        Classroom classroom = classroomOptional.get();
+        boolean success = QRCodeGenerator.generateQRCode(classroom);
 
+        if (success) {
+            return ResponseEntity.status(HttpStatus.OK).body("QR Code generated for Classroom ID: " + classId);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error generating QR Code for Classroom ID: " + classId);
+        }
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Classroom not found with ID: " + classId);
+    }
+}
 }
 
 
