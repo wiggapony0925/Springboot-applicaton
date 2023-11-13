@@ -92,22 +92,24 @@ public class ClassroomController {
     // Generate Classroom QrCode
 
     @GetMapping("/generateQRCode/{classId}")
-public ResponseEntity<String> generateQRCode(@PathVariable Long classId) {
-    Optional<Classroom> classroomOptional = classroomService.getClassroomById(classId);
+    public ResponseEntity<String> generateQRCode(@PathVariable Long classId) {
+        Optional<Classroom> classroomOptional = classroomService.getClassroomById(classId);
 
-    if (classroomOptional.isPresent()) {
-        Classroom classroom = classroomOptional.get();
-        boolean success = QRCodeGenerator.generateQRCode(classroom);
+        if (classroomOptional.isPresent()) {
+            System.out.println("this classroom " + classroomOptional + " is present");
+            Classroom classroom = classroomOptional.get();
+            boolean success = qrCodeGenerator.generateQRCode(classroom);
 
-        if (success) {
-            return ResponseEntity.status(HttpStatus.OK).body("QR Code generated for Classroom ID: " + classId);
+            if (success) {
+                return ResponseEntity.status(HttpStatus.OK).body("QR Code generated for Classroom ID: " + classId);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error generating QR Code for Classroom ID: " + classId);
+            }
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error generating QR Code for Classroom ID: " + classId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Classroom not found with ID: " + classId);
         }
-    } else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Classroom not found with ID: " + classId);
     }
-}
 }
 
 
